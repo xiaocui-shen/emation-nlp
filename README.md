@@ -193,13 +193,6 @@ loss = alpha * soft_loss * T^2 + (1 - alpha) * hard_loss
 - `bert_distill/predict_fun.py` 加载的是 `student_classifier_last_model.pt`（最后一个 epoch 权重），而非 best 权重。
 - `predict_fun.py` 中 `torch.load` 未指定 `map_location`，在无 GPU 机器上加载 CUDA 权重可能报错。
 
-## 后续可做
-
-- 补齐 `requirements.txt`，固定依赖版本。
-- 用 `surprise` 等长尾类别做重采样 / 类别加权，改善不均衡。
-- 蒸馏后模型量化（int8）进一步压缩，并对比推理延迟。
-- `data/stopwords.txt` 目前未被引用，可确认是否需要接入。
-
 ## 数据来源与致谢
 
 - 数据集：英文 Twitter 情感数据集（六类基本情感），原始分布与本项目 `original_data.txt` 完全一致。
