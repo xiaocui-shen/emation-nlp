@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>功能介绍 · 情智星球</title>
+<style>
+/* ===== Reset & Base ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-primary: #0a0a1a;
+  --bg-secondary: #111128;
+  --bg-card: rgba(255, 255, 255, 0.04);
+  --bg-card-hover: rgba(255, 255, 255, 0.07);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --text-muted: rgba(255, 255, 255, 0.45);
+  --accent-purple: #a78bfa;
+  --accent-violet: #8b5cf6;
+  --gradient-purple: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 50%, #7c3aed 100%);
+  --gradient-btn: linear-gradient(135deg, #c084fc 0%, #a855f7 100%);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ===== Navigation ===== */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 16px 0;
+  background: rgba(10, 10, 26, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.nav-logo-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #a78bfa, #6366f1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.nav-logo span:last-child {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 400;
+  margin-left: 4px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.nav-links a {
+  font-size: 15px;
+  color: var(--text-secondary);
+  transition: color 0.2s;
+  position: relative;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--text-primary);
+}
+
+.nav-links a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gradient-purple);
+  border-radius: 1px;
+}
+
+.nav-btn {
+  background: var(--gradient-btn);
+  color: white !important;
+  padding: 9px 22px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.nav-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* ===== Hero Section ===== */
+.hero {
+  padding: 140px 0 80px;
+  text-align: center;
+}
+
+.hero-label {
+  display: inline-block;
+  font-size: 14px;
+  color: var(--accent-purple);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 24px;
+  background: linear-gradient(135deg, #fff 0%, #c4b5fd 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero p {
+  font-size: 18px;
+  color: var(--text-secondary);
+  max-width: 640px;
+  margin: 0 auto 48px;
+  line-height: 1.7;
+}
+
+/* ===== Feature Cards ===== */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 120px;
+}
+
+.feature-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 36px 28px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-purple);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.feature-card:hover {
+  background: var(--bg-card-hover);
+  border-color: rgba(167, 139, 250, 0.2);
+  transform: translateY(-4px);
+}
+
+.feature-card:hover::before {
+  opacity: 1;
+}
+
+.feature-card h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.feature-card p {
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* ===== Section Common ===== */
+.section {
+  padding: 60px 0 100px;
+}
+
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--accent-purple);
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+
+.section-label::before {
+  content: '';
+  width: 20px;
+  height: 2px;
+  background: var(--accent-purple);
+  border-radius: 1px;
+}
+
+.section-title {
+  font-size: clamp(30px, 4vw, 44px);
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 16px;
+}
+
+.section-desc {
+  font-size: 17px;
+  color: var(--text-secondary);
+  max-width: 560px;
+  line-height: 1.7;
+  margin-bottom: 48px;
+}
+
+/* ===== Assessment Section ===== */
+.assessment-section .section-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+.radar-container {
+  position: sticky;
+  top: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+.radar-chart {
+  width: 340px;
+  height: 340px;
+  position: relative;
+}
+
+/* CSS-only radar chart approximation */
+.radar-bg {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(167, 139, 250, 0.15);
+  border-radius: 50%;
+}
+.radar-bg:nth-child(2) { inset: 15%; border-color: rgba(167, 139, 250, 0.12); }
+.radar-bg:nth-child(3) { inset: 30%; border-color: rgba(167, 139, 250, 0.09); }
+.radar-bg:nth-child(4) { inset: 45%; border-color: rgba(167, 139, 250, 0.06); }
+
+.radar-shape {
+  position: absolute;
+  inset: 18%;
+  background: rgba(167, 139, 250, 0.12);
+  clip-path: polygon(50% 0%, 85% 20%, 90% 58%, 65% 92%, 35% 92%, 10% 58%, 15% 20%);
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  transition: all 0.5s ease;
+}
+
+.radar-labels {
+  position: absolute;
+  inset: -20px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.radar-labels span {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+}
+
+.dimension-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dimension-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.25s;
+}
+
+.dimension-item:hover {
+  background: var(--bg-card-hover);
+  border-color: rgba(167, 139, 250, 0.15);
+}
+
+.dimension-info h4 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.dimension-info p {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.dimension-score {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accent-purple);
+  min-width: 40px;
+  text-align: right;
+}
+
+/* ===== Archive Section ===== */
+.archive-section .section-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+.archive-content ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 32px;
+}
+
+.archive-content li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  color: var(--text-secondary);
+}
+
+.archive-content li::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-violet);
+  flex-shrink: 0;
+}
+
+.report-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: 32px;
+  position: sticky;
+  top: 100px;
+}
+
+.report-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.report-header h4 {
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.report-header span {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.report-badge {
+  font-size: 12px;
+  color: var(--accent-purple);
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.report-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.metric-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.metric-row:last-of-type {
+  border-bottom: none;
+}
+
+.metric-name {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.metric-value {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.metric-value.positive { color: #34d399; }
+.metric-value.negative { color: #f87171; }
+
+.report-summary {
+  margin-top: 24px;
+  padding: 20px;
+  background: rgba(167, 139, 250, 0.06);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--accent-purple);
+}
+
+.report-summary p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  font-style: italic;
+}
+
+/* ===== Footer ===== */
+.footer {
+  text-align: center;
+  padding: 48px 0;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 900px) {
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .assessment-section .section-inner,
+  .archive-section .section-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .radar-container {
+    position: static;
+    margin-bottom: 40px;
+  }
+  
+  .report-card {
+    position: static;
+  }
+  
+  .nav-links {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero { padding: 120px 0 60px; }
+  .hero h1 { font-size: 32px; }
+  .feature-card { padding: 28px 20px; }
+  .container { padding: 0 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-icon">🌙</div>
+      情智星球
+    </a>
+    <div class="nav-links">
+      <a href="#" class="active">功能介绍</a>
+      <a href="http://192.168.13.68:8501/" target="_blank" class="nav-btn">开始对话</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <span class="hero-label">产品功能</span>
+    <h1>三个核心，<br>一站式陪伴</h1>
+    <p>8 维心理状态评估、心理档案、各种风格 AI 咨询师 —— 三个核心能力一起，重新定义 AI 心理陪伴。</p>
+    
+    <div class="features-grid">
+      <div class="feature-card">
+        <h3>各种风格 AI 咨询师</h3>
+        <p>覆盖婚恋情感、亲子家庭、情绪心理、职场成长 4 大领域，每位都有独特专长与陪伴风格，总有一位懂你。</p>
+      </div>
+      <div class="feature-card">
+        <h3>8 维心理状态评估</h3>
+        <p>情绪状态、认知模式、行为表现、人际关系、自我效能、功能水平、动机与目标、适应性与韧性 —— 8 个维度全面呈现你的状态与变化。</p>
+      </div>
+      <div class="feature-card">
+        <h3>心理档案</h3>
+        <p>记录你的情绪轨迹，生成专属心理报告，陪你看见自己的成长与变化。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8维评估 Section -->
+<section class="section assessment-section">
+  <div class="container">
+    <span class="section-label">6 维心理状态评估</span>
+    <h2 class="section-title">看见自己，是改变的第一步</h2>
+    <p class="section-desc">覆盖心理健康的 6 个核心维度，对应你日常最关心的那些问题。每周更新、长期追踪，让你看见自己的变化。</p>
+    
+    <div class="section-inner">
+      <div class="radar-container">
+        <div class="radar-chart">
+          <div class="radar-bg"></div>
+          <div class="radar-bg"></div>
+          <div class="radar-bg"></div>
+          <div class="radar-bg"></div>
+          <div class="radar-shape"></div>
+          <div class="radar-labels">
+            <span style="top:0%;left:50%">情绪状态</span>
+            <span style="top:18%;right:5%">认知模式</span>
+            <span style="top:55%;right:0%">行为表现</span>
+            <span style="bottom:10%;right:12%">人际关系</span>
+            <span style="bottom:10%;left:12%">自我效能</span>
+            <span style="top:55%;left:0%">功能水平</span>
+            <span style="top:18%;left:5%">动机目标</span>
+            <span style="top:42%;left:50%">适应性韧性</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="dimension-list">
+        <div class="dimension-item">
+          <div class="dimension-info">
+            <h4>情绪状态</h4>
+            <p>关注情绪的起伏与内在张力，衡量情绪调节的弹性空间。</p>
+          </div>
+          <span class="dimension-score">58</span>
+        </div>
+        <div class="dimension-item">
+          <div class="dimension-info">
+            <h4>认知模式</h4>
+            <p>识别信念图式与思维偏误，观察认知转换与重构的能力。</p>
+          </div>
+          <span class="dimension-score">65</span>
+        </div>
+        <div class="dimension-item">
+          <div class="dimension-info">
+            <h4>行为表现</h4>
+            <p>评估行为激活水平与驱动力来源，关注应对策略的有效性。</p>
+          </div>
+          <span class="dimension-score">60</span>
+        </div>
+        <div class="dimension-item">
+          <div class="dimension-info">
+            <h4>人际关系</h4>
+            <p>考察社会支持网络与亲密关系质量，发掘关系中的积极资源。</p>
+          </div>
+          <span class="dimension-score">73</span>
+        </div>
+        <div class="dimension-item">
+          <div class="dimension-info">
+            <h4>自我效能</h4>
+            <p>衡量自我掌控感与能力信心，识别可释放的成长潜能。</p>
+          </div>
+          <span class="dimension-score">68</span>
+        </div>
+        <div class="dimension-item">
+          <div class="dimension-info">
+            <h4>功能水平</h4>
+            <p>评估社会与角色功能的稳定度，关注功能保持与复原力。</p>
+          </div>
+          <span class="dimension-score">62</span>
+        </div>
+        <div class="dimension-item">
+          <div class="dimension-info">
+            <h4>动机与目标</h4>
+            <p>探询改变的意愿强度，追溯内在驱动力与核心价值取向。</p>
+          </div>
+          <span class="dimension-score">55</span>
+        </div>
+        <div class="dimension-item">
+          <div class="dimension-info">
+            <h4>适应性与韧性</h4>
+            <p>检验压力应对与逆境复原的能力，这是心理资本的核心维度。</p>
+          </div>
+          <span class="dimension-score">70</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 心理档案 Section -->
+<section class="section archive-section">
+  <div class="container">
+    <span class="section-label">心理档案</span>
+    <h2 class="section-title">你的情绪，<br>AI 帮你看见</h2>
+    <p class="section-desc">情智星球的 AI 会记录你每一次对话中的情绪变化，生成专属心理档案。让你看见：上个月的你、现在的你，以及背后的趋势。</p>
+    
+    <div class="section-inner">
+      <div class="archive-content">
+        <ul>
+          <li>长期记忆：AI 记得你的故事</li>
+          <li>情绪轨迹可视化</li>
+          <li>每月生成专属心理报告</li>
+          <li>私密性：仅你自己可见</li>
+        </ul>
+      </div>
+      
+      <div class="report-card">
+        <div class="report-header">
+          <div>
+            <h4>本月心理报告</h4>
+            <span>2026 年 6 月</span>
+          </div>
+          <span class="report-badge">AI 生成</span>
+        </div>
+        
+        <div class="report-metrics">
+          <div class="metric-row">
+            <span class="metric-name">情绪状态</span>
+            <span class="metric-value positive">+12%</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-name">认知模式</span>
+            <span class="metric-value negative">-18%</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-name">行为表现</span>
+            <span class="metric-value positive">+8%</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-name">人际关系</span>
+            <span class="metric-value negative">-3%</span>
+          </div>
+        </div>
+        
+        <div class="report-summary">
+          <p>"本月你在情绪调节方面有显著进步。继续保持对话频率，下个月我们一起关注睡眠质量。"</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <p>© 2026 情智星球 · 用 AI 温暖每一颗心</p>
+  </div>
+</footer>
+
+</body>
+</html>
